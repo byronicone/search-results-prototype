@@ -1,0 +1,28 @@
+{
+  "name": "rover-client",
+  "version": "1.0.0",
+  "description": "A quick prototype of a search page with sitters ranked by overall rating of their visits.",
+  "main": "index.js",
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  },
+  "proxy": "http://localhost:5000",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/roverjobs/interview-180602-bb.git"
+  },
+  "author": "Anonymous",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/roverjobs/interview-180602-bb/issues"
+  },
+  "homepage": "https://github.com/roverjobs/interview-180602-bb#readme",
+  "dependencies": {
+    "react": "^16.4.0",
+    "react-dom": "^16.4.0",
+    "react-scripts": "1.1.4"
+  }
+}

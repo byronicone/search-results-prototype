@@ -1,10 +1,12 @@
 {
-  "name": "rover-replacement",
+  "name": "rover-server",
   "version": "1.0.0",
-  "description": "A quick prototype of a search page with sitters ranked by overall rating of their visits.",
-  "main": "index.js",
+  "description": "Backend for managing sitters, owners, visits, dogs, and dog appointments",
+  "main": "server.js",
   "scripts": {
-    "test": "mocha"
+    "client": "cd client && npm start",
+    "server": "nodemon server.js",
+    "start": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client\""
   },
   "repository": {
     "type": "git",
@@ -18,12 +20,15 @@
   "homepage": "https://github.com/roverjobs/interview-180602-bb#readme",
   "dependencies": {
     "csv-parse": "^2.4.0",
+    "debug": "~2.6.9",
     "dotenv": "^6.0.0",
+    "express": "~4.16.0",
     "mongodb": "^3.0.10",
     "ramda": "^0.25.0"
   },
   "devDependencies": {
     "chai": "^4.1.2",
+    "concurrently": "^3.5.1",
     "mocha": "^5.2.0"
   }
 }
