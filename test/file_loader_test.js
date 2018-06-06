@@ -1,4 +1,4 @@
-const fl = require('../file_loader');
+const fl = require('../util/file_loader');
 const expect = require('chai').expect;
 
 describe('CSV Parsing', () => {

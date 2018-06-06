@@ -43,6 +43,43 @@ module.exports.readObjects = function (type, query){
   })
 }
 
+module.exports.readObjects = function (type, query){
+  return new Promise( (resolve, reject) => {
+    roverDbo.collection(type).find(query).toArray()
+      .then( (resp) => {
+      resolve(resp);
+    }).catch( (err) => {
+      reject(err);
+    })
+  })
+}
+module.exports.aggregateObjects = function (fromType, aggType){
+  return new Promise( (resolve, reject) => {
+    roverDbo.collection(aggType).aggregate([
+      { $lookup:
+        {
+          from: fromType,
+          localField: fromType+'_id',
+          foreignField: '_id',
+          as: fromType
+        }
+      },
+      { $unwind: '$'+fromType},
+      { $group:
+          { _id: '$sitter.sitter',
+            avg: { $avg: '$rating' },
+            count: { $sum: 1}
+          }
+        },
+      { $sort: { avg: -1 } }
+      ]).toArray()
+      .then( (resp) => {
+      resolve(resp);
+    }).catch( (err) => {
+      reject(err);
+    })
+  })
+}
 module.exports.close = function close(){
   return new Promise( (resolve, reject) => {
     try{

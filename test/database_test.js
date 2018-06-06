@@ -2,20 +2,21 @@ const dotenv = require('dotenv').config();
 const chai = require('chai');
 const expect = chai.expect;
 
-var create = require('../crud/create');
-var read = require('../crud/read');
-var database = require('../crud/database');
+var create = require('../data/create');
+var read = require('../data/read');
+var database = require('../data/database');
+var rankings = require('../search/rankings');
 
-const threeReviews = require('./data/three_reviews');
+const reviews = require('./data/reviews');
 
-describe('Database Operations', () => {
+describe('Data operations', () => {
   after( () => {
     database.dropDatabase();
   })
   context('INSERT', () => {
     it('should insert data into roverdb', async () => {
-      let result = await create.connectAndInsert(threeReviews);
-      expect(result).to.have.length(3);
+      let result = await create.connectAndInsert(reviews);
+      expect(result).to.have.length(reviews.length);
       result.map( (insertions) => {
         expect(insertions.sitter_id).to.be.ok;
         expect(insertions.owner_id).to.be.ok;
@@ -28,27 +29,44 @@ describe('Database Operations', () => {
   })
   context('READ', () => {
     it('should read sitters from roverdb', async () => {
-      let sitters = await read.getSitters(threeReviews);
+      let sitters = await read.getSitters();
 
-      expect(sitters).to.have.length(3);
+      expect(sitters).to.have.length(reviews.length);
 
     })
     it('should read owners from roverdb', async () => {
-      let owners = await read.getOwners(threeReviews);
+      let owners = await read.getOwners();
 
-      expect(owners).to.have.length(3);
+      expect(owners).to.have.length(reviews.length);
 
     })
     it('should read visits from roverdb', async () => {
-      let visits = await read.getVisits(threeReviews);
-
-      expect(visits).to.have.length(3);
+      let visits = await read.getVisits();
+      visits= visits.reduce( (accum, visit) => {
+        return accum + visit.count;
+      }, 0)
+      expect(visits).to.equal(reviews.length);
 
     })
     it('should read dogs from roverdb', async () => {
-      let dogs = await read.getDogs(threeReviews);
+      let dogs = await read.getDogs();
 
-      expect(dogs).to.have.length(6);
+      expect(dogs).to.have.length(9);
+    })
+  })
+  context('Sitter rankings', () => {
+    it('should calculate sitter score from letters in name', () => {
+      let sitterScore = rankings.calculateSitterScore('Bartholomew Z.')
+      expect(sitterScore).to.equal(2.12)
+    })
+    it('should return visit ratings for all sitters', async () => {
+      let sitterRatings = await rankings.getSitterRatings()
+      console.log(sitterRatings);
+      expect(sitterRatings[0].count).to.equal(2)
+      expect(sitterRatings[0].avg).to.equal(3.5)
+      expect(sitterRatings[0].overallSitterRank).to.equal(1.62)
+    })
+    it('should calculate ratings score as average of visit ratings', () => {
     })
   })
 })

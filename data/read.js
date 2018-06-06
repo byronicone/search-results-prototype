@@ -30,7 +30,7 @@ module.exports.getOwners = function(){
 module.exports.getVisits = function(){
   return new Promise( (resolve, reject) => {
     database.connect().then( () => {
-      database.readObjects(schema.VISIT.TYPE, {})
+      database.aggregateObjects(schema.SITTER.TYPE, schema.VISIT.TYPE)
         .then( (visits) => {
           resolve(visits);
           database.close();

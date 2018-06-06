@@ -1,7 +1,7 @@
-const filter = require('../crud/filter');
+const filter = require('../util/filter');
 const expect = require('chai').expect;
 
-const schema = require('../crud/schema');
+const schema = require('../data/schema');
 const oneReview = require('./data/one_review');
 
 describe('filter functions', () => {

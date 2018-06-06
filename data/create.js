@@ -1,4 +1,4 @@
-const filter = require('./filter');
+const filter = require('../util/filter');
 const database = require('./database');
 const schema = require('./schema');
 const R = require('ramda');
@@ -49,6 +49,7 @@ function insertSitterAndVisit(review){
       database.insertObject(schema.SITTER.TYPE, filter.getSitter(review))
       .then( (sitter) => {
         let visitObj = R.assoc("sitter_id", sitter.insertedId, filter.getVisit(review));
+        visitObj.rating = parseInt(visitObj.rating);
         database.insertObject(schema.VISIT.TYPE, visitObj)
           .then( (visitResp) => {
             resolve({'sitter_id': sitter.insertedId, 'visit_id': visitResp.insertedId});

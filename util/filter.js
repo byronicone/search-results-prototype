@@ -1,4 +1,4 @@
-const schema = require('../crud/schema');
+const schema = require('../data/schema');
 const R = require('ramda');
 
 module.exports.getSitter = function(review){
