@@ -1,0 +1,29 @@
+{
+  "name": "rover-replacement",
+  "version": "1.0.0",
+  "description": "A quick prototype of a search page with sitters ranked by overall rating of their visits.",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/roverjobs/interview-180602-bb.git"
+  },
+  "author": "Anonymous",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/roverjobs/interview-180602-bb/issues"
+  },
+  "homepage": "https://github.com/roverjobs/interview-180602-bb#readme",
+  "dependencies": {
+    "csv-parse": "^2.4.0",
+    "dotenv": "^6.0.0",
+    "mongodb": "^3.0.10",
+    "ramda": "^0.25.0"
+  },
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "mocha": "^5.2.0"
+  }
+}
