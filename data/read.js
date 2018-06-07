@@ -1,9 +1,10 @@
+const dbName = process.env.DATABASE_NAME || 'rovertest';
 const database = require('./database');
 const schema = require('./schema');
 
 module.exports.getSitters = function(){
   return new Promise( (resolve, reject) => {
-    database.connect().then( () => {
+    database.connect(dbName).then( () => {
       database.readObjects(schema.SITTER.TYPE, {})
         .then( (sitters) => {
           resolve(sitters);
@@ -16,7 +17,7 @@ module.exports.getSitters = function(){
 }
 module.exports.getOwners = function(){
   return new Promise( (resolve, reject) => {
-    database.connect().then( () => {
+    database.connect(dbName).then( () => {
       database.readObjects(schema.SITTER.TYPE, {})
         .then( (owners) => {
           resolve(owners);
@@ -29,7 +30,7 @@ module.exports.getOwners = function(){
 }
 module.exports.getVisits = function(){
   return new Promise( (resolve, reject) => {
-    database.connect().then( () => {
+    database.connect(dbName).then( () => {
       database.aggregateObjects(schema.SITTER.TYPE, schema.VISIT.TYPE)
         .then( (visits) => {
           resolve(visits);
@@ -42,7 +43,7 @@ module.exports.getVisits = function(){
 }
 module.exports.getDogs = function(){
   return new Promise( (resolve, reject) => {
-    database.connect().then( () => {
+    database.connect(dbName).then( () => {
       database.readObjects(schema.DOG.TYPE, {})
         .then( (dogs) => {
           resolve(dogs);

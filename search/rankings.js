@@ -12,23 +12,22 @@ module.exports.calculateSitterScore = function(name){
   return Math.round((5 * (uniqueSet.size/26))*100)/100;
 }
 
-module.exports.getSitterRatings = async function(){
-  let sitterRatings = await read.getVisits(schema.SITTER.TYPE, schema.VISIT.TYPE);
+module.exports.getSitterRankings = async function(){
+  let sitterRankings = await read.getVisits(schema.SITTER.TYPE, schema.VISIT.TYPE);
 
-  sitterRatings.map( (sitter) => {
-      sitter.overallSitterRank = calculateSitterRank(sitter);
+  sitterRankings.map( (sitter) => {
+      sitter.sitter_ranking = calculateSitterRanking(sitter);
     })
 
-  return sitterRatings;
+  sitterRankings.sort( function(a,b){ return b.sitter_ranking - a.sitter_ranking })
+  return sitterRankings;
 }
 
-function calculateSitterRank(sitter){
-  let sitterScore = module.exports.calculateSitterScore(sitter._id);
+function calculateSitterRanking(sitter){
+  let sitterScore = module.exports.calculateSitterScore(sitter.sitter_name);
 
-  let ratingWeight = sitter.count/10;
-  let scoreWeight = sitter.count < 10 ? 1 - ratingWeight : 0;
-
-  let rank = sitterScore * scoreWeight + sitter.avg * ratingWeight;
-
-  return Math.round(rank*100)/100;
+  let ratingWeight = Math.min(1, sitter.sitter_rating_count/10);
+  let scoreWeight = 1 - ratingWeight;
+  let sitter_ranking = sitterScore * scoreWeight + sitter.sitter_rating_avg * ratingWeight;
+  return Math.round(sitter_ranking*100)/100;
 }

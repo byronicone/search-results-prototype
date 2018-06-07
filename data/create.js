@@ -1,12 +1,13 @@
 const filter = require('../util/filter');
 const database = require('./database');
 const schema = require('./schema');
+const dbName = process.env.DATABASE_NAME;
 const R = require('ramda');
 
 module.exports.connectAndInsert = function(reviews){
   return new Promise( (resolve, reject) => {
     try{
-      database.connect().then( () => {
+      database.connect(dbName).then( () => {
         insertAllReviewData(reviews).then( (reviewPromises) => {
           Promise.all(reviewPromises).then( (insertions) => {
             database.close();

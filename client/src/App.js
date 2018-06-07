@@ -6,20 +6,15 @@ class App extends Component {
   state = { sitters: [] }
 
   componentDidMount() {
-    let divs = [];
     this.getSitters()
       .then(sitters => {
-        sitters.map( (sitter) => {
-            divs.push(
-               sitter._id+'\n'
-            )
-        })
-        this.setState({ sitters: divs })
+        this.setState({ sitters: sitters })
       })
       .catch(err => console.log(err));
   }
 
-  getSitters = async () => {
+  getSitters = async (minimumRating) => {
+    this.setState( { sitters:[] } )
     const response = await fetch('/api/sitters');
     const body = await response.json();
     if (response.status !== 200) throw Error(body.message);
@@ -34,17 +29,56 @@ class App extends Component {
           <img src={logo} className="App-logo" alt="logo" />
           <h1 className="App-title">We're the dog people.</h1>
         </header>
-        <p className="App-intro">
-          <Result sitters={this.state.sitters}/>
-        </p>
+        <div className="App-intro">
+          <Filter onSubmit={this.getSitters}/>
+          <CardList sitters={this.state.sitters}/>
+        </div>
       </div>
     );
   }
 }
 
-const Result = (props) => {
+class Filter extends Component{
+  state = {
+    minimumRating: 0
+  }
+
+  handleSubmit = (event ) => {
+    event.preventDefault();
+    this.props.onSubmit(this.state.minimumRating);
+  }
+  render(){
+    return(
+      <form onSubmit={this.handleSubmit}>
+        Minimum Rating: <input type="range" min="0" max="5.0" value={this.state.minimumRating}
+        onChange={ event => {
+          this.setState({minimumRating: event.target.value})
+        }
+        }
+      />
+        <button>Search</button>
+      </form>
+    )
+  }
+}
+
+const Card = (props) => {
   return(
-    <div>{props.sitters}</div>
+    <div style={{margin:'1em'}}>
+      <img style={{width: '100px'}} alt="A nice kitty" src={props.sitter_image}/>
+      <div style={{display: 'inline-block', marginLeft:'1em'}}>
+        <div style={{fontWeight: 'bold'}}>{props.sitter_name}</div>
+        <div>{props.sitter_ranking}</div>
+      </div>
+    </div>
+  )
+}
+
+const CardList = (props) => {
+  return(
+    <div>
+      {props.sitters.map( sitter => <Card key={sitter._id} {...sitter} />)}
+    </div>
   )
 }
 

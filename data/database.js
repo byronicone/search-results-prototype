@@ -1,12 +1,18 @@
 const MongoClient = require('mongodb').MongoClient;
 
-const dbName = process.env.DATABASE_NAME;
-const url = process.env.ROVER_DB_URL;
 
 var roverDb;
 var roverDbo;
 
-module.exports.connect = function(reviews){
+var url;
+var dbName;
+
+module.exports.config = function(configUrl, configDb){
+  url = configUrl;
+  dbName = configDb;
+}
+
+module.exports.connect = function(){
   return new Promise( (resolve, reject) => {
     MongoClient.connect(url, function(err, db) {
       if(err){
@@ -67,11 +73,13 @@ module.exports.aggregateObjects = function (fromType, aggType){
       { $unwind: '$'+fromType},
       { $group:
           { _id: '$sitter.sitter',
-            avg: { $avg: '$rating' },
-            count: { $sum: 1}
+            sitter_name: { $first: '$sitter.sitter' },
+            sitter_image: { $first: '$sitter.sitter_image' },
+            sitter_rating_avg: { $avg: '$rating' },
+            sitter_rating_count: { $sum: 1 }
           }
         },
-      { $sort: { avg: -1 } }
+      { $sort: { sitter_rating_avg: -1 } }
       ]).toArray()
       .then( (resp) => {
       resolve(resp);
@@ -92,7 +100,7 @@ module.exports.close = function close(){
   })
 }
 
-module.exports.dropDatabase = function(reviews){
+module.exports.dropDatabase = function(){
   MongoClient.connect(url, function(err, db) {
     if(err){
       return err;

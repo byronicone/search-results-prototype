@@ -1,4 +1,3 @@
-const dotenv = require('dotenv').config();
 const chai = require('chai');
 const expect = chai.expect;
 
@@ -10,8 +9,11 @@ var rankings = require('../search/rankings');
 const reviews = require('./data/reviews');
 
 describe('Data operations', () => {
+  beforeEach( () => {
+    database.config('mongodb://localhost:27017/', 'rovertest');
+  })
   after( () => {
-    database.dropDatabase();
+    database.dropDatabase('rovertest');
   })
   context('INSERT', () => {
     it('should insert data into roverdb', async () => {
@@ -43,7 +45,7 @@ describe('Data operations', () => {
     it('should read visits from roverdb', async () => {
       let visits = await read.getVisits();
       visits= visits.reduce( (accum, visit) => {
-        return accum + visit.count;
+        return accum + visit.sitter_rating_count;
       }, 0)
       expect(visits).to.equal(reviews.length);
 
@@ -60,11 +62,10 @@ describe('Data operations', () => {
       expect(sitterScore).to.equal(2.12)
     })
     it('should return visit ratings for all sitters', async () => {
-      let sitterRatings = await rankings.getSitterRatings()
-      console.log(sitterRatings);
-      expect(sitterRatings[0].count).to.equal(2)
-      expect(sitterRatings[0].avg).to.equal(3.5)
-      expect(sitterRatings[0].overallSitterRank).to.equal(1.62)
+      let sitterRatings = await rankings.getSitterRankings()
+      expect(sitterRatings[0].sitter_rating_count).to.equal(2)
+      expect(sitterRatings[0].sitter_rating_avg).to.equal(3.5)
+      expect(sitterRatings[0].sitter_ranking).to.equal(1.62)
     })
     it('should calculate ratings score as average of visit ratings', () => {
     })
