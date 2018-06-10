@@ -10,6 +10,8 @@ These instructions assume you're on a Mac.  If not, you'll have to install mongo
 
 You must have the `mongod` command available for the start scripts to use.  `brew install mongodb` if you don't have it already.
 
+`npm` is also required.  `brew install npm`
+
 ### Install dependencies
 
 `npm install`
