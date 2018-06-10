@@ -9,7 +9,7 @@ var connect = require('mongodb').connect;
 var env = process.env.NODE_ENV;
 var url = process.env.ROVER_DB_URL;
 
-var roverDbName = env == 'production' ? process.env.DATABASE_NAME : 'roverDbName'
+var roverDbName = env == 'production' ? process.env.DATABASE_NAME : 'roverdbtest'
 
 module.exports.prepare = function(data){
   return new Promise( (resolve, reject) => {
