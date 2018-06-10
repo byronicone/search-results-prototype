@@ -26,9 +26,12 @@ describe('Sitter rankings', () => {
       testSitter.sitter_rating_avg=5.0
       testSitter.sitter_score=2.5
 
-      for(let i = 0; i <=10; i++){
+      for(let i = 0; i <=12; i++){
         testSitter.sitter_rating_count=i;
-        let score = testSitter.sitter_score + 0.25 * i;
+
+        let weight = i <= 10 ? 0.25 * i : 2.5;  //for 11 and 12, we don't increment the weight anymore.
+
+        let score = testSitter.sitter_score + weight;
         rankings.calculateSitterStats(testSitter);
         expect(testSitter.sitter_ranking).to.equal(score);
       }
