@@ -21,8 +21,10 @@
   },
   "homepage": "https://github.com/roverjobs/interview-180602-bb#readme",
   "dependencies": {
+    "ramda": "^0.25.0",
     "react": "^16.4.0",
     "react-dom": "^16.4.0",
-    "react-scripts": "1.1.4"
+    "react-scripts": "1.1.4",
+    "react-star-rating-component": "^1.4.1"
   }
 }

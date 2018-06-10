@@ -1,0 +1,90 @@
+2018-06-09T13:28:48.776-0500 I CONTROL  [initandlisten] MongoDB starting : pid=67936 port=27017 dbpath=/data/db 64-bit host=Byrons-MacBook-Pro.local
+2018-06-09T13:28:48.776-0500 I CONTROL  [initandlisten] db version v3.6.3
+2018-06-09T13:28:48.776-0500 I CONTROL  [initandlisten] git version: 9586e557d54ef70f9ca4b43c26892cd55257e1a5
+2018-06-09T13:28:48.776-0500 I CONTROL  [initandlisten] OpenSSL version: OpenSSL 1.0.2n  7 Dec 2017
+2018-06-09T13:28:48.776-0500 I CONTROL  [initandlisten] allocator: system
+2018-06-09T13:28:48.776-0500 I CONTROL  [initandlisten] modules: none
+2018-06-09T13:28:48.776-0500 I CONTROL  [initandlisten] build environment:
+2018-06-09T13:28:48.776-0500 I CONTROL  [initandlisten]     distarch: x86_64
+2018-06-09T13:28:48.776-0500 I CONTROL  [initandlisten]     target_arch: x86_64
+2018-06-09T13:28:48.777-0500 I CONTROL  [initandlisten] options: { processManagement: { fork: true }, systemLog: { destination: "file", path: "logs/mongo.txt" } }
+2018-06-09T13:28:48.777-0500 I -        [initandlisten] Detected data files in /data/db created by the 'wiredTiger' storage engine, so setting the active storage engine to 'wiredTiger'.
+2018-06-09T13:28:48.778-0500 I STORAGE  [initandlisten] wiredtiger_open config: create,cache_size=3584M,session_max=20000,eviction=(threads_min=4,threads_max=4),config_base=false,statistics=(fast),log=(enabled=true,archive=true,path=journal,compressor=snappy),file_manager=(close_idle_time=100000),statistics_log=(wait=0),verbose=(recovery_progress),
+2018-06-09T13:28:50.357-0500 I STORAGE  [initandlisten] WiredTiger message [1528568930:357215][67936:0x7fff9a465380], txn-recover: Main recovery loop: starting at 29/31744
+2018-06-09T13:28:50.582-0500 I STORAGE  [initandlisten] WiredTiger message [1528568930:582170][67936:0x7fff9a465380], txn-recover: Recovering log 29 through 30
+2018-06-09T13:28:50.817-0500 I STORAGE  [initandlisten] WiredTiger message [1528568930:817417][67936:0x7fff9a465380], txn-recover: Recovering log 30 through 30
+2018-06-09T13:28:51.182-0500 I CONTROL  [initandlisten] 
+2018-06-09T13:28:51.182-0500 I CONTROL  [initandlisten] ** WARNING: Access control is not enabled for the database.
+2018-06-09T13:28:51.182-0500 I CONTROL  [initandlisten] **          Read and write access to data and configuration is unrestricted.
+2018-06-09T13:28:51.183-0500 I CONTROL  [initandlisten] 
+2018-06-09T13:28:51.183-0500 I CONTROL  [initandlisten] ** WARNING: This server is bound to localhost.
+2018-06-09T13:28:51.183-0500 I CONTROL  [initandlisten] **          Remote systems will be unable to connect to this server. 
+2018-06-09T13:28:51.183-0500 I CONTROL  [initandlisten] **          Start the server with --bind_ip <address> to specify which IP 
+2018-06-09T13:28:51.184-0500 I CONTROL  [initandlisten] **          addresses it should serve responses from, or with --bind_ip_all to
+2018-06-09T13:28:51.184-0500 I CONTROL  [initandlisten] **          bind to all interfaces. If this behavior is desired, start the
+2018-06-09T13:28:51.184-0500 I CONTROL  [initandlisten] **          server with --bind_ip 127.0.0.1 to disable this warning.
+2018-06-09T13:28:51.185-0500 I CONTROL  [initandlisten] 
+2018-06-09T13:28:51.208-0500 I FTDC     [initandlisten] Initializing full-time diagnostic data capture with directory '/data/db/diagnostic.data'
+2018-06-09T13:28:51.212-0500 I NETWORK  [initandlisten] waiting for connections on port 27017
+2018-06-09T13:28:52.584-0500 I NETWORK  [listener] connection accepted from 127.0.0.1:64333 #1 (1 connection now open)
+2018-06-09T13:28:52.593-0500 I NETWORK  [conn1] received client metadata from 127.0.0.1:64333 conn: { driver: { name: "nodejs", version: "3.0.10" }, os: { type: "Darwin", name: "darwin", architecture: "x64", version: "17.5.0" }, platform: "Node.js v10.0.0, LE, mongodb-core: 3.0.9" }
+2018-06-09T13:28:52.648-0500 I NETWORK  [conn1] end connection 127.0.0.1:64333 (0 connections now open)
+2018-06-09T13:28:52.648-0500 I NETWORK  [listener] connection accepted from 127.0.0.1:64335 #2 (1 connection now open)
+2018-06-09T13:28:52.650-0500 I NETWORK  [conn2] received client metadata from 127.0.0.1:64335 conn: { driver: { name: "nodejs", version: "3.0.10" }, os: { type: "Darwin", name: "darwin", architecture: "x64", version: "17.5.0" }, platform: "Node.js v10.0.0, LE, mongodb-core: 3.0.9" }
+2018-06-09T13:28:52.693-0500 I NETWORK  [listener] connection accepted from 127.0.0.1:64337 #3 (2 connections now open)
+2018-06-09T13:28:52.700-0500 I STORAGE  [conn2] createCollection: roverdb.sitter with generated UUID: 30ed07cc-58df-4623-8404-55463393b9d9
+2018-06-09T13:28:52.764-0500 I INDEX    [conn2] build index on: roverdb.sitter properties: { v: 2, unique: true, key: { sitter: 1 }, name: "sitter_1", ns: "roverdb.sitter" }
+2018-06-09T13:28:52.765-0500 I INDEX    [conn2] 	 building index using bulk method; build may temporarily use up to 500 megabytes of RAM
+2018-06-09T13:28:52.776-0500 I INDEX    [conn2] build index done.  scanned 0 total records. 0 secs
+2018-06-09T13:28:52.812-0500 I NETWORK  [conn2] end connection 127.0.0.1:64335 (1 connection now open)
+2018-06-09T13:28:52.812-0500 I NETWORK  [conn3] end connection 127.0.0.1:64337 (0 connections now open)
+2018-06-09T13:28:52.814-0500 I NETWORK  [listener] connection accepted from 127.0.0.1:64339 #4 (1 connection now open)
+2018-06-09T13:28:52.814-0500 I NETWORK  [conn4] received client metadata from 127.0.0.1:64339 conn: { driver: { name: "nodejs", version: "3.0.10" }, os: { type: "Darwin", name: "darwin", architecture: "x64", version: "17.5.0" }, platform: "Node.js v10.0.0, LE, mongodb-core: 3.0.9" }
+2018-06-09T13:28:52.832-0500 I NETWORK  [listener] connection accepted from 127.0.0.1:64341 #5 (2 connections now open)
+2018-06-09T13:28:52.834-0500 I STORAGE  [conn5] createCollection: roverdb.visit with generated UUID: b8bb262b-075d-41c8-ab63-86d08f82e00f
+2018-06-09T13:28:52.837-0500 I NETWORK  [listener] connection accepted from 127.0.0.1:64343 #6 (3 connections now open)
+2018-06-09T13:28:52.847-0500 I NETWORK  [listener] connection accepted from 127.0.0.1:64345 #7 (4 connections now open)
+2018-06-09T13:28:52.856-0500 I NETWORK  [listener] connection accepted from 127.0.0.1:64347 #8 (5 connections now open)
+2018-06-09T13:28:52.878-0500 I STORAGE  [conn4] createCollection: roverdb.dog with generated UUID: 75cfbcfd-ee44-4b6e-a0a8-2e7608b3beb1
+2018-06-09T13:28:52.920-0500 I STORAGE  [conn6] createCollection: roverdb.owner with generated UUID: 61a5fc79-bee8-4280-ad01-c516e5d5b161
+2018-06-09T13:28:52.962-0500 I COMMAND  [conn6] command roverdb.owner command: insert { insert: "owner", ordered: true, lsid: { id: UUID("92dc5730-0460-4a52-8122-1613cfc8fbae") }, $db: "roverdb" } ninserted:1 keysInserted:1 numYields:0 reslen:44 locks:{ Global: { acquireCount: { r: 5, w: 3 } }, Database: { acquireCount: { r: 1, w: 2, W: 1 }, acquireWaitCount: { w: 1, W: 1 }, timeAcquiringMicros: { w: 30428, W: 41868 } }, Collection: { acquireCount: { r: 1, w: 2 } } } protocol:op_query 114ms
+2018-06-09T13:28:52.962-0500 I COMMAND  [conn4] command roverdb.dog command: insert { insert: "dog", ordered: true, lsid: { id: UUID("5acc3f4d-a13f-4f04-8293-87fbc688ebae") }, $db: "roverdb" } ninserted:1 keysInserted:1 numYields:0 reslen:44 locks:{ Global: { acquireCount: { r: 5, w: 3 } }, Database: { acquireCount: { r: 1, w: 2, W: 1 }, acquireWaitCount: { w: 2, W: 1 }, timeAcquiringMicros: { w: 82627, W: 201 } }, Collection: { acquireCount: { r: 1, w: 2 } } } protocol:op_query 124ms
+2018-06-09T13:28:53.015-0500 I NETWORK  [listener] connection accepted from 127.0.0.1:64349 #9 (6 connections now open)
+2018-06-09T13:28:53.017-0500 I NETWORK  [conn9] received client metadata from 127.0.0.1:64349 conn: { driver: { name: "nodejs", version: "3.0.10" }, os: { type: "Darwin", name: "darwin", architecture: "x64", version: "17.5.0" }, platform: "Node.js v10.0.0, LE, mongodb-core: 3.0.9" }
+2018-06-09T13:28:53.066-0500 I NETWORK  [listener] connection accepted from 127.0.0.1:64351 #10 (7 connections now open)
+2018-06-09T13:28:53.068-0500 I NETWORK  [listener] connection accepted from 127.0.0.1:64353 #11 (8 connections now open)
+2018-06-09T13:28:53.069-0500 I NETWORK  [conn11] received client metadata from 127.0.0.1:64353 conn: { driver: { name: "nodejs", version: "3.0.10" }, os: { type: "Darwin", name: "darwin", architecture: "x64", version: "17.5.0" }, platform: "Node.js v10.0.0, LE, mongodb-core: 3.0.9" }
+2018-06-09T13:28:53.079-0500 I NETWORK  [listener] connection accepted from 127.0.0.1:64355 #12 (9 connections now open)
+2018-06-09T13:28:53.080-0500 I NETWORK  [listener] connection accepted from 127.0.0.1:64357 #13 (10 connections now open)
+2018-06-09T13:28:53.081-0500 I NETWORK  [conn13] received client metadata from 127.0.0.1:64357 conn: { driver: { name: "nodejs", version: "3.0.10" }, os: { type: "Darwin", name: "darwin", architecture: "x64", version: "17.5.0" }, platform: "Node.js v10.0.0, LE, mongodb-core: 3.0.9" }
+2018-06-09T13:28:53.094-0500 I NETWORK  [listener] connection accepted from 127.0.0.1:64359 #14 (11 connections now open)
+2018-06-09T13:28:53.830-0500 I NETWORK  [listener] connection accepted from 127.0.0.1:64361 #15 (12 connections now open)
+2018-06-09T13:28:53.831-0500 I NETWORK  [conn15] received client metadata from 127.0.0.1:64361 conn: { driver: { name: "nodejs", version: "3.0.10" }, os: { type: "Darwin", name: "darwin", architecture: "x64", version: "17.5.0" }, platform: "Node.js v10.0.0, LE, mongodb-core: 3.0.9" }
+2018-06-09T13:28:53.872-0500 I NETWORK  [listener] connection accepted from 127.0.0.1:64363 #16 (13 connections now open)
+2018-06-09T13:28:53.923-0500 I NETWORK  [listener] connection accepted from 127.0.0.1:64365 #17 (14 connections now open)
+2018-06-09T13:28:53.928-0500 I NETWORK  [conn17] received client metadata from 127.0.0.1:64365 conn: { driver: { name: "nodejs", version: "3.0.10" }, os: { type: "Darwin", name: "darwin", architecture: "x64", version: "17.5.0" }, platform: "Node.js v10.0.0, LE, mongodb-core: 3.0.9" }
+2018-06-09T13:28:53.952-0500 I NETWORK  [listener] connection accepted from 127.0.0.1:64367 #18 (15 connections now open)
+2018-06-09T13:28:53.953-0500 I COMMAND  [conn17] CMD: drop roverdb.owner
+2018-06-09T13:28:53.953-0500 I STORAGE  [conn17] Finishing collection drop for roverdb.owner (61a5fc79-bee8-4280-ad01-c516e5d5b161).
+2018-06-09T13:28:53.954-0500 I COMMAND  [conn18] CMD: drop roverdb.visit
+2018-06-09T13:28:53.959-0500 I NETWORK  [listener] connection accepted from 127.0.0.1:64369 #19 (16 connections now open)
+2018-06-09T13:28:53.964-0500 I NETWORK  [listener] connection accepted from 127.0.0.1:64371 #20 (17 connections now open)
+2018-06-09T13:28:53.964-0500 I COMMAND  [conn19] CMD: drop roverdb.sitter
+2018-06-09T13:28:53.966-0500 I COMMAND  [conn20] CMD: drop roverdb.dog
+2018-06-09T13:28:53.975-0500 I STORAGE  [conn18] Finishing collection drop for roverdb.visit (b8bb262b-075d-41c8-ab63-86d08f82e00f).
+2018-06-09T13:28:53.998-0500 I STORAGE  [conn19] Finishing collection drop for roverdb.sitter (30ed07cc-58df-4623-8404-55463393b9d9).
+2018-06-09T13:28:54.030-0500 I STORAGE  [conn20] Finishing collection drop for roverdb.dog (75cfbcfd-ee44-4b6e-a0a8-2e7608b3beb1).
+2018-06-09T13:28:54.063-0500 I NETWORK  [listener] connection accepted from 127.0.0.1:64373 #21 (18 connections now open)
+2018-06-09T13:28:54.064-0500 I NETWORK  [conn21] received client metadata from 127.0.0.1:64373 conn: { driver: { name: "nodejs", version: "3.0.10" }, os: { type: "Darwin", name: "darwin", architecture: "x64", version: "17.5.0" }, platform: "Node.js v10.0.0, LE, mongodb-core: 3.0.9" }
+2018-06-09T13:28:54.064-0500 I NETWORK  [conn17] end connection 127.0.0.1:64365 (17 connections now open)
+2018-06-09T13:28:54.064-0500 I NETWORK  [conn19] end connection 127.0.0.1:64369 (16 connections now open)
+2018-06-09T13:28:54.070-0500 I NETWORK  [conn18] end connection 127.0.0.1:64367 (15 connections now open)
+2018-06-09T13:28:54.071-0500 I NETWORK  [conn20] end connection 127.0.0.1:64371 (14 connections now open)
+2018-06-09T13:28:54.071-0500 I COMMAND  [conn21] terminating, shutdown command received
+2018-06-09T13:28:54.071-0500 I NETWORK  [conn21] shutdown: going to close listening sockets...
+2018-06-09T13:28:54.071-0500 I NETWORK  [conn21] removing socket file: /tmp/mongodb-27017.sock
+2018-06-09T13:28:54.072-0500 I FTDC     [conn21] Shutting down full-time diagnostic data capture
+2018-06-09T13:28:54.073-0500 I STORAGE  [conn21] WiredTigerKVEngine shutting down
+2018-06-09T13:28:54.311-0500 I STORAGE  [conn21] shutdown: removing fs lock...
+2018-06-09T13:28:54.311-0500 I CONTROL  [conn21] now exiting
+2018-06-09T13:28:54.312-0500 I CONTROL  [conn21] shutting down with code:0

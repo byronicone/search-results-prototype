@@ -1,33 +1,48 @@
-const read = require('../data/read')
+var rank = {};
+
+const read = require('../data/read');
 const R = require('ramda');
 const schema = require('../data/schema');
 
-module.exports.calculateSitterScore = function(name){
-  let alphasOnly = name.replace(/[^a-zA-Z]/g, '').toLowerCase().split('')
+rank.getSitterRankings = async function(minimumRating = 0){
+  let sitterRankings = await read.getVisits(minimumRating);
+  return sitterRankings
+    .map( (sitter) => {
+      let withStats = rank.calculateSitterStats(rank.calculateSitterScore(sitter))
+      return withStats;
+    })
+    .sort( function(a,b) { return b.sitter_ranking - a.sitter_ranking } )
+}
+
+rank.calculateSitterStats = function(sitter){
+
+  sitter.sitter_rating_avg = Math.round(sitter.sitter_rating_avg*100)/100;
+
+
+  let ratingWeight = Math.min(1, sitter.sitter_rating_count/10);
+
+  let scoreWeight = 1 - ratingWeight;
+
+  sitter.sitter_ranking = Math.round(
+    (sitter.sitter_score * scoreWeight + sitter.sitter_rating_avg * ratingWeight)
+    *100)/100;
+
+  return sitter;
+}
+
+rank.calculateSitterScore = function(sitter){
+  let alphasOnly = sitter.sitter_name.replace(/[^a-zA-Z]/g, '').toLowerCase().split('')
   let uniqueSet = alphasOnly.reduce((set, alpha)=> {
     set.add(alpha)
     return set
   }, new Set())
 
-  return Math.round((5 * (uniqueSet.size/26))*100)/100;
+  sitter.sitter_score = Math.round((5 * (uniqueSet.size/26))*100)/100;
+  return sitter;
 }
 
-module.exports.getSitterRankings = async function(){
-  let sitterRankings = await read.getVisits(schema.SITTER.TYPE, schema.VISIT.TYPE);
-
-  sitterRankings.map( (sitter) => {
-      sitter.sitter_ranking = calculateSitterRanking(sitter);
-    })
-
-  sitterRankings.sort( function(a,b){ return b.sitter_ranking - a.sitter_ranking })
-  return sitterRankings;
-}
-
-function calculateSitterRanking(sitter){
-  let sitterScore = module.exports.calculateSitterScore(sitter.sitter_name);
-
-  let ratingWeight = Math.min(1, sitter.sitter_rating_count/10);
-  let scoreWeight = 1 - ratingWeight;
-  let sitter_ranking = sitterScore * scoreWeight + sitter.sitter_rating_avg * ratingWeight;
-  return Math.round(sitter_ranking*100)/100;
+for(prop in rank) {
+   if(rank.hasOwnProperty(prop)) {
+     module.exports[prop] = rank[prop];
+   }
 }

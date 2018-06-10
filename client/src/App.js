@@ -1,26 +1,34 @@
 import React, { Component } from 'react';
+import {splitEvery} from 'ramda';
+import {range} from 'ramda';
 import logo from './logo.svg';
+import browseIcon from './icon_browse_sitter.svg';
+import heartIcon from './icon_heart_shield.svg';
+import payIcon from './icon_phone_pay.svg';
+import speechIcon from './icon_speech_bubbles.svg';
+import StarRatingComponent from 'react-star-rating-component';
 import './App.css';
 
+
 class App extends Component {
-  state = { sitters: [] }
+  state = { sitters: [], page: 1, lastPage:1}
 
   componentDidMount() {
-    this.getSitters()
-      .then(sitters => {
-        this.setState({ sitters: sitters })
-      })
-      .catch(err => console.log(err));
+    this.getSitters();
   }
 
   getSitters = async (minimumRating) => {
-    this.setState( { sitters:[] } )
-    const response = await fetch('/api/sitters');
-    const body = await response.json();
-    if (response.status !== 200) throw Error(body.message);
-    return body;
+    const response = await fetch(`/api/sitters?minimumRating=${minimumRating}`);
+    const sitters = await response.json();
+    this.setState({sitters: sitters, page: 1, lastPage: sitters.length/10});
   }
 
+  changePage = (newPage) => {
+    this.setState( (prevState) => {
+      prevState.page = newPage;
+      return prevState;
+    })
+  }
 
   render() {
     return (
@@ -30,54 +38,77 @@ class App extends Component {
           <h1 className="App-title">We're the dog people.</h1>
         </header>
         <div className="App-intro">
-          <Filter onSubmit={this.getSitters}/>
-          <CardList sitters={this.state.sitters}/>
+          <div className="star-ratings">
+          <div>Choose a standard of excellence for your pooch's new pal!</div>
+            <StarRatingComponent
+              name="minimumRatingFilter"
+              starCount={5}
+              value={this.state.minimumRating}
+              onStarClick={this.getSitters.bind(this)}
+            />
+          </div>
+          <CardList page={this.state.page} sitters={this.state.sitters}/>
+          <Paginator onPageClick={this.changePage} currentPage={this.state.page} lastPage={this.state.lastPage}/>
         </div>
       </div>
     );
   }
 }
 
-class Filter extends Component{
-  state = {
-    minimumRating: 0
-  }
-
-  handleSubmit = (event ) => {
-    event.preventDefault();
-    this.props.onSubmit(this.state.minimumRating);
-  }
-  render(){
-    return(
-      <form onSubmit={this.handleSubmit}>
-        Minimum Rating: <input type="range" min="0" max="5.0" value={this.state.minimumRating}
-        onChange={ event => {
-          this.setState({minimumRating: event.target.value})
-        }
-        }
-      />
-        <button>Search</button>
-      </form>
-    )
-  }
-}
-
 const Card = (props) => {
   return(
-    <div style={{margin:'1em'}}>
-      <img style={{width: '100px'}} alt="A nice kitty" src={props.sitter_image}/>
-      <div style={{display: 'inline-block', marginLeft:'1em'}}>
-        <div style={{fontWeight: 'bold'}}>{props.sitter_name}</div>
-        <div>{props.sitter_ranking}</div>
+    <div style={{marginBottom: '1.5em', marginLeft: '3em', marginRight:'3em', display: 'inline-block'}}>
+      <img style={{height: '12em'}} alt="A nice kitty" src={props.sitter_image}/>
+      <div >
+        <div style={{margin: '.5em'}}>
+          <div className="sitter-details" style={{fontWeight: 'bold'}}>{props.sitter_name}</div>
+          <div className="sitter-details"> Rating: {props.sitter_rating_avg}</div>
+        </div>
+        <div className="sitter-actions">
+          <img src={browseIcon} className="action-icon" alt="browse" />
+          <img src={heartIcon} className="action-icon" alt="like" />
+          <img src={payIcon} className="action-icon" alt="pay" />
+          <img src={speechIcon} className="action-icon" alt="contact" />
+        </div>
       </div>
     </div>
   )
 }
 
 const CardList = (props) => {
+
+  let currentPage = props.sitters;
+
+  if(props.sitters.length > 10){
+    currentPage = splitEvery( 10, props.sitters )[props.page - 1];
+  }
+
   return(
-    <div>
-      {props.sitters.map( sitter => <Card key={sitter._id} {...sitter} />)}
+    <div style={{margin: '3em'}}>
+      {currentPage.map( sitter => <Card key={sitter._id} {...sitter} />)}
+    </div>
+  )
+}
+
+const Paginator = (props) => {
+  const allPageNumbers = range(1, props.lastPage + 1);
+
+  const selectIfCurrent = (pageNumber) => {
+    if(props.currentPage === pageNumber){
+      return 'selected';
+    }
+  }
+
+  return(
+    <div style={{width: '100%'}}>
+    {allPageNumbers.map( (page, i) => {
+      return <span key={i} className={selectIfCurrent(page)}
+      style={{display: 'inline-block', borderRadius: '50%', margin: '0.5em', width: '24px',
+          cursor: 'pointer', backgroundColor: '#59ce97', textAlign: 'center'}}
+        onClick={ () => props.onPageClick(page)}>
+        {page}
+      </span>
+     })}
     </div>
   )
 }

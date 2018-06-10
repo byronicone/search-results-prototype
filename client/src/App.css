@@ -21,7 +21,24 @@
   font-size: large;
 }
 
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+.star-ratings {
+  margin-top: 3em;
+}
+
+.sitter-details {
+  display: inline;
+}
+
+.sitter-actions {
+  cursor: pointer;
+  height: 50px;
+}
+
+.action-icon {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.selected {
+  background-color: #99bb99;
 }

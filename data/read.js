@@ -4,53 +4,52 @@ const schema = require('./schema');
 
 module.exports.getSitters = function(){
   return new Promise( (resolve, reject) => {
-    database.connect(dbName).then( () => {
-      database.readObjects(schema.SITTER.TYPE, {})
+    let params = {};
+    params.type = schema.SITTER.TYPE;
+    params.query = {};
+    database.connectAndCallback(params, database.readObjects)
         .then( (sitters) => {
           resolve(sitters);
-          database.close();
-        })
-    }).catch( (err) => {
-      reject(err);
-    });
+        }).catch( (err) => {
+          reject(err);
+        });
   })
 }
-module.exports.getOwners = function(){
+
+module.exports.getVisits = function(minimumRating = 0){
   return new Promise( (resolve, reject) => {
-    database.connect(dbName).then( () => {
-      database.readObjects(schema.SITTER.TYPE, {})
-        .then( (owners) => {
-          resolve(owners);
-          database.close();
-        })
-    }).catch( (err) => {
-      reject(err);
-    });
-  })
-}
-module.exports.getVisits = function(){
-  return new Promise( (resolve, reject) => {
-    database.connect(dbName).then( () => {
-      database.aggregateObjects(schema.SITTER.TYPE, schema.VISIT.TYPE)
-        .then( (visits) => {
-          resolve(visits);
-          database.close();
-        })
-    }).catch( (err) => {
-      reject(err);
-    });
-  })
-}
-module.exports.getDogs = function(){
-  return new Promise( (resolve, reject) => {
-    database.connect(dbName).then( () => {
-      database.readObjects(schema.DOG.TYPE, {})
-        .then( (dogs) => {
-          resolve(dogs);
-          database.close();
-        })
-    }).catch( (err) => {
-      reject(err);
-    });
+    let params = {};
+    params.type = schema.VISIT.TYPE
+    sitterType = schema.SITTER.TYPE
+    params.stages = [
+      { $lookup:
+        {
+          from: sitterType,
+          localField: sitterType,
+          foreignField: sitterType,
+          as: sitterType
+        }
+      },
+      { $unwind: '$sitter'},
+      { $group:
+          { _id: `$sitter.sitter`,
+            sitter_name: { $first: `$sitter.sitter` },
+            sitter_image: { $first: `$sitter.sitter_image` },
+            sitter_rating_avg: { $avg: '$rating' },
+
+            sitter_rating_count: { $sum: 1 }
+          }
+      },
+      { $match: {sitter_rating_avg: {$gte: minimumRating}}},
+      { $sort: { sitter_rating_avg: -1 } }
+      ]
+
+    database.connectAndCallback(params, database.aggregateObjects)
+      .then( (visits) => {
+        resolve(visits);
+      })
+      .catch( (err) => {
+        reject(err);
+      });
   })
 }

@@ -6,7 +6,11 @@
   "scripts": {
     "client": "cd client && npm start",
     "server": "nodemon server.js",
-    "start": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client\""
+    "mongod": "mongod --fork --logpath logs/mongo.txt",
+    "clean-start": "npm run mongod && node scripts/clean-start.js && set NODE_ENV=production && npm start",
+    "quick-start": "npm run mongod && set NODE_ENV=production && npm start",
+    "start": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client\"",
+    "test": "set NODE_ENV=development&& npm run mongod && mocha --reporter spec"
   },
   "repository": {
     "type": "git",
@@ -29,6 +33,8 @@
   "devDependencies": {
     "chai": "^4.1.2",
     "concurrently": "^3.5.1",
-    "mocha": "^5.2.0"
+    "database-cleaner": "^1.2.0",
+    "mocha": "^5.2.0",
+    "sinon": "^5.1.0"
   }
 }
