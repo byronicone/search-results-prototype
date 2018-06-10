@@ -1,3 +1,92 @@
+# Byron's Rover Replacement
+
+First of all, thank you for the opportunity to interview.  This was a fun project to work on.  I hope you'll be impressed by how much I was able to get done.  My last team did 1 week sprints with TDD and pair-swapping, so I'm pretty good at cranking out an MVP in a short time.
+
+## How to run it
+
+These instructions assume you're on a Mac.  If not, you'll have to install mongodb the appropriate way for your OS.
+
+### Prerequisites
+
+You must have the `mongod` command available for the start scripts to use.  `brew install mongodb` if you don't have it already.
+
+### Install dependencies
+
+`npm install`
+
+The client and server are bundled together in one start command.  In practice, I'd deploy these (and mongodb) as microservices using CI/CD, but to ease the process for this interview I bundled everything together.
+
+### The first time you run the app (or if you want to rebuild the database):
+
+`npm run clean-start`
+
+This will read from "reviews.csv" and populate the database which is enabled by the forked `mongod` process. Feel free to edit the csv file to get different results.
+
+### On subsequent runs:
+
+`npm run quick-start`
+
+This will skip the loading of the database and just launch everything.
+
+In either case, your browser should automatically open to localhost:3000 to view my prototype.
+
+
+## Design Approach
+
+### Server side: Node.js w/ Express
+
+Full stack Javascript comes natural to me, and remains the quickest/cleanest way to get a prototype up and running in no time.  The event loop is fast enough to handle web applications, and can even be nicely scaled if 12-factor design is used.  It doesn't hurt that great libraries exist for pretty much anything you need to accomplish in a jiffy.
+
+### Data store: Mongodb
+
+The recovered data wasn't normalized.  I attempted to build an ERD for a more conventional relational database, but it quicky became apparent that for the given requirements a document-based store would be a good choice.  
+
+Mongo also provides a nice aggregation layer with grouping and filtering stages that match the requirements.  Any further views we build can take advantage of these features and provide high performance.  And, because I'm using Javascript in the entire stack, the JSON format can be passed everywhere with low complexity.
+
+Finally, indexing and creation of tables happens automatically with mongo, which means you can run the scripts, sit back, relax, and enjoy my beautiful work instead of trying to build tables.
+
+### Front End: React
+
+The power of using Javascript to dynamically build a UI speaks for itself.  I was easily able to make a prototype and even add some nice style to it.
+
+The layout allows a responsive design, where we see many sitters per row in a browser, but only 1 as the window shrinks to mobile size.  The results are paginated at the bottom - React binds to the state of the result array, and automatically builds the pages based on changes to this state.  Everything is sorted by the secret sauce required by the assigned algorithm.
+
+I'm not a front-end expert, but I know enough to be dangerous and work with UI/UX teams to deliver quality.  In a full stack role, I'm confident in my ability to tackle this piece of the stack and continually improve my design skills.
+
+### Functional Programming and Ramda.js
+
+I tried to keep things functional, making the code easy to test because of its pure functions with no side effects.  
+
+Ramda is a library full of utility functions to write code that is functional.  I use it here to manipulate objects and arrays in one-line statements that are easy to read.
+
+Also check out the generator function in database.js that creates a database connection, makes a callback, and continues to close the connection when that is completed.  No objects need be exposed, other than a temporary client.  This allowed me to encapsulate all connection management into one block.  I have not tried this approach before for connection management, and I wanted to show the use of a generator, and it seems to work well.  And because node is a single-threaded event loop, nothing should be competing for that connection.
+
+### Testing approach
+
+I used TDD with Mocha - at all times, I have my code, the test file, and the test results in various panes on my screen, so I can track whether any changes I'm making cause failures.  I run early and often, and I write the tests first - thought to be honest, I got a little too excited while working through some issues and had to go back and add tests on this project.  But that's what code coverage reports are for, right?  I'd definitely add that along with CI/CD in a real work scenario.
+
+In honor of 12-Factor design, to eliminate differences between dev and prod, I think it's important to test against an actual (temporary, test) database here and not use mocking - at least in the data methods themselves.  The aggregation that mongo does is key to the solution and should be tested with real data.
+
+To minimize the complexity you face in running my code, I included startup of the database, teardown, and clearing of test data all within the scripts.  Note that it will take some time for the test to finish, because it calls a mongo shutdown command, and has to wait for the forked process to exit.  In a CI/CD system, I would decouple this to allow for instant test completion.  
+
+If you CTRL-C out of the tests, and want to kill the mongo process manually, run `ps ax | grep mongo`, find the mongod process, and `kill <PID>`.  Otherwise, just wait a few more seconds and it should kill it for you.
+
+## Future improvements
+
+I feel I delivered a great first sprint on this page/app, but the following work remains to be done:
+
+* Separate db implementation from logic using some sort of adapter.
+* Split client, server, and database into separate microservices.
+* Implement smart caching with expirations.  Have to define the acceptable threshold for eventual consistency.
+* Prefetch the search for only the first N number of pages.  Get more data as needed.
+* Allow updates to sitter rating to occur without re-calculating the average from scratch.  Right now, any time the rating is calculated, it's from a mongodb aggregation that groups the visits by sitter name and averages the ratings - then it applies the algorithm to calculate the sitter ranking.  If we add features to delete ratings, re-rate, etc - this solution will still work fine, but in anticipation of higher traffic we might want to explore a way to extrapolate the new rating from the previous one directly.
+
+
+## Thank you!
+
+Hope you enjoyed it, and I'd be absolutely overjoyed to get to meet all of you and potentially join the Rover family.  My dogs Calvin and Chloe say "woof" to you.  Translation: Byron is awesome and you should totally invite him on-site!
+
+
 # Rover Coding Project
 
 Rover.com was destroyed in a terrible Amazon and GitHub accident.
