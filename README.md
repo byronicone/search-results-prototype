@@ -30,6 +30,12 @@ This will skip the loading of the database and just launch everything.
 
 In either case, your browser should automatically open to localhost:3000 to view my prototype.
 
+### To run the tests:
+
+`npm test`
+
+See section on testing approach for more details.
+
 
 ## Design Approach
 
@@ -63,7 +69,7 @@ Also check out the generator function in database.js that creates a database con
 
 ### Testing approach
 
-I used TDD with Mocha - at all times, I have my code, the test file, and the test results in various panes on my screen, so I can track whether any changes I'm making cause failures.  I run early and often, and I write the tests first - thought to be honest, I got a little too excited while working through some issues and had to go back and add tests on this project.  But that's what code coverage reports are for, right?  I'd definitely add that along with CI/CD in a real work scenario.
+I used TDD with Mocha - at all times, I have my code, the test file, and the test results in various panes on my screen, so I can track whether any changes I'm making cause failures.  I run early and often, and I write the tests first - though, to be honest, I got a little too excited while working through some issues and had to remember to go back and add tests.  But that's what code coverage reports (and pair programming) are for, right?  I'd definitely add that along with CI/CD in a real work scenario.
 
 In honor of 12-Factor design, to eliminate differences between dev and prod, I think it's important to test against an actual (temporary, test) database here and not use mocking - at least in the data methods themselves.  The aggregation that mongo does is key to the solution and should be tested with real data.
 
