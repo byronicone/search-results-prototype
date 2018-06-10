@@ -86,6 +86,7 @@ I feel I delivered a great first sprint on this page/app, but the following work
 * Split client, server, and database into separate microservices.
 * Implement smart caching with expirations.  Have to define the acceptable threshold for eventual consistency. (I wanted to use Redis for this, but didn't get to it within the 1 week timeline.)
 * Prefetch the search for only the first N number of pages.  Get more data as needed.
+* Add a pleasant landing page, with loading animations while we are retrieving the sitters.
 * Allow updates to sitter rating to occur without re-calculating the average from scratch.  Right now, any time the rating is calculated, it's from a mongodb aggregation that groups the visits by sitter name and averages the ratings - then it applies the algorithm to calculate the sitter ranking.  If we add features to delete ratings, re-rate, etc - this solution will still work fine, but in anticipation of higher traffic we might want to explore a way to extrapolate the new rating from the previous one directly.  
 * ***I only implemented the features that were explicitly requested*** while leaving room to extend more, which is why there are no functions/tests for deleting or manipulating data.  
 
