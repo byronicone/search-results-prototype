@@ -91,11 +91,6 @@ I feel I delivered a great first sprint on this page/app, but the following work
 * ***I only implemented the features that were explicitly requested*** while leaving room to extend more, which is why there are no functions/tests for deleting or manipulating data.  
 
 
-## Thank you!
-
-Hope you enjoyed it, and I'd be absolutely overjoyed to get to meet all of you and potentially join the Rover family.  My dogs Calvin and Chloe say "woof" to you.  Translation: REDACTED is awesome and you should totally invite REDACTED on-site!
-
-
 # Rover Coding Project
 
 Rover.com was destroyed in a terrible Amazon and GitHub accident.
