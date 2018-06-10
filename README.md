@@ -1,4 +1,4 @@
-# Byron's Rover Replacement
+# <Redacted>'s Rover Replacement
 
 First of all, thank you for the opportunity to interview.  This was a fun project to work on.  I hope you'll be impressed by how much I was able to get done.  My last team did 1 week sprints with TDD and pair-swapping, so I'm pretty good at cranking out an MVP in a short time.
 
@@ -92,7 +92,7 @@ I feel I delivered a great first sprint on this page/app, but the following work
 
 ## Thank you!
 
-Hope you enjoyed it, and I'd be absolutely overjoyed to get to meet all of you and potentially join the Rover family.  My dogs Calvin and Chloe say "woof" to you.  Translation: Byron is awesome and you should totally invite him on-site!
+Hope you enjoyed it, and I'd be absolutely overjoyed to get to meet all of you and potentially join the Rover family.  My dogs Calvin and Chloe say "woof" to you.  Translation: <Redacted> is awesome and you should totally invite <redacted> on-site!
 
 
 # Rover Coding Project
